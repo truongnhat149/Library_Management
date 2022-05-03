@@ -1,0 +1,29 @@
+package com.codegym.configuration;
+
+import javax.servlet.http.HttpSession;
+
+import com.codegym.service.IUserService;
+import com.codegym.service.impl.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
+import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Component;
+
+@Component
+public class LoginSuccessListener implements ApplicationListener<AuthenticationSuccessEvent> {
+
+	@Autowired
+	private IUserService userServiceImpl;
+	
+	@Autowired
+	private HttpSession httpSession;
+	
+	@Override
+	public void onApplicationEvent(AuthenticationSuccessEvent event) {
+        User user = (User) event.getAuthentication().getPrincipal();
+        String displayName = userServiceImpl.getByUsername( user.getUsername() ).getDisplayName();
+        httpSession.setAttribute("loggedInUserName", displayName);
+	}
+	
+}

@@ -11,6 +11,7 @@
  - jQuery
  - Thymeleaf
  - RESTful API
+ - Http Session
 ## Các công việc đã làm
 - Phân tích vấn đề 
 - Phân tích Database
